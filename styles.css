@@ -1,0 +1,330 @@
+:root {
+  color-scheme: light;
+  --bg: #f7f4ee;
+  --ink: #1d2528;
+  --muted: #697277;
+  --panel: #ffffff;
+  --line: #d9ded8;
+  --accent: #0e7c7b;
+  --accent-dark: #075d61;
+  --coral: #db5a42;
+  --gold: #d59c2b;
+  --shadow: 0 24px 60px rgba(29, 37, 40, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Hiragino Sans", "Yu Gothic UI", "Yu Gothic", Meiryo, system-ui, sans-serif;
+  background:
+    linear-gradient(135deg, rgba(14, 124, 123, 0.12), transparent 35%),
+    linear-gradient(315deg, rgba(219, 90, 66, 0.12), transparent 38%),
+    var(--bg);
+  color: var(--ink);
+}
+
+button,
+input {
+  font: inherit;
+}
+
+.app-shell {
+  width: min(1120px, calc(100% - 32px));
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 32px 0;
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(360px, 1.1fr);
+  gap: 28px;
+  align-items: center;
+}
+
+.hero {
+  min-height: 560px;
+  display: grid;
+  align-content: center;
+  gap: 34px;
+}
+
+.hero-visual {
+  position: relative;
+  min-height: 260px;
+  isolation: isolate;
+}
+
+.calendar-card {
+  position: absolute;
+  inset: 22px auto auto 8%;
+  width: min(320px, 82vw);
+  aspect-ratio: 1 / 1.06;
+  border-radius: 8px;
+  background: var(--panel);
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(29, 37, 40, 0.08);
+  overflow: hidden;
+  transform: rotate(-4deg);
+}
+
+.calendar-top {
+  display: block;
+  height: 70px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-dark));
+}
+
+.calendar-day {
+  display: grid;
+  place-items: center;
+  height: 132px;
+  font-size: clamp(4rem, 18vw, 6.7rem);
+  font-weight: 800;
+  letter-spacing: 0;
+  color: var(--coral);
+}
+
+.calendar-grid {
+  display: block;
+  width: calc(100% - 48px);
+  height: 64px;
+  margin: 0 auto;
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 38px 24px;
+}
+
+.orbit {
+  position: absolute;
+  border: 2px solid rgba(213, 156, 43, 0.42);
+  border-radius: 999px;
+  z-index: -1;
+}
+
+.orbit-one {
+  width: 250px;
+  height: 250px;
+  right: 3%;
+  top: 8px;
+}
+
+.orbit-two {
+  width: 180px;
+  height: 180px;
+  left: 0;
+  bottom: 0;
+  border-color: rgba(14, 124, 123, 0.28);
+}
+
+.hero-copy {
+  max-width: 520px;
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  color: var(--accent-dark);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(2.8rem, 7vw, 5.4rem);
+  line-height: 1.02;
+  letter-spacing: 0;
+}
+
+.lead {
+  margin: 18px 0 0;
+  max-width: 36rem;
+  color: var(--muted);
+  font-size: 1.06rem;
+  line-height: 1.8;
+}
+
+.tool {
+  background: rgba(255, 255, 255, 0.86);
+  border: 1px solid rgba(29, 37, 40, 0.08);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  padding: clamp(20px, 4vw, 34px);
+  backdrop-filter: blur(12px);
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 14px;
+  align-items: end;
+}
+
+.field {
+  display: grid;
+  gap: 8px;
+}
+
+.field span {
+  color: var(--muted);
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+input {
+  width: 100%;
+  min-height: 48px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--ink);
+  padding: 10px 12px;
+  outline: none;
+}
+
+input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(14, 124, 123, 0.14);
+}
+
+.primary-button {
+  min-height: 48px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--accent);
+  color: #fff;
+  padding: 0 18px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.primary-button:hover {
+  background: var(--accent-dark);
+}
+
+.status {
+  min-height: 24px;
+  margin-top: 14px;
+  color: var(--coral);
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.summary {
+  display: grid;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.today-panel,
+.milestone,
+.custom-result {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+}
+
+.today-panel {
+  padding: 22px;
+}
+
+.panel-label,
+.panel-unit,
+.milestone-count {
+  color: var(--muted);
+  font-size: 0.86rem;
+  font-weight: 800;
+}
+
+.today-number {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: clamp(3.1rem, 9vw, 5.8rem);
+  line-height: 0.98;
+  font-weight: 850;
+  letter-spacing: 0;
+  color: var(--accent-dark);
+}
+
+.panel-unit {
+  margin-left: 8px;
+}
+
+.panel-date {
+  margin: 10px 0 0;
+  color: var(--muted);
+}
+
+.milestones {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.milestone,
+.custom-result {
+  padding: 18px;
+}
+
+.milestone output,
+.custom-result output {
+  display: block;
+  margin-top: 8px;
+  font-size: clamp(1.05rem, 2.4vw, 1.34rem);
+  font-weight: 800;
+}
+
+.custom-result {
+  border-color: rgba(219, 90, 66, 0.3);
+  background: #fffaf6;
+}
+
+@media (max-width: 860px) {
+  .app-shell {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .hero {
+    min-height: auto;
+    padding-top: 16px;
+  }
+
+  .hero-visual {
+    min-height: 210px;
+  }
+
+  .calendar-card {
+    width: min(260px, 76vw);
+  }
+
+  .controls,
+  .milestones {
+    grid-template-columns: 1fr;
+  }
+
+  .primary-button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-shell {
+    width: min(100% - 20px, 1120px);
+    padding: 18px 0;
+  }
+
+  .tool {
+    padding: 16px;
+  }
+
+  h1 {
+    font-size: clamp(2.4rem, 14vw, 3.8rem);
+  }
+}
