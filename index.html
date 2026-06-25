@@ -3,21 +3,43 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="生年月日から生誕日数を計算するページです。">
+    <meta name="description" content="誕生日から今日が何日目か、記念日がいつ来るかを計算するページです。">
     <title>HappyBirthDayFor10kD!!</title>
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
     <main class="app-shell">
       <header class="page-header">
-        <h1>ｲﾁﾏﾝﾆﾁｵﾀｵﾒﾚｰｼｮﾝ.html</h1>
+        <h1>HappyBirthDayFor10kD!!</h1>
       </header>
 
-      <section class="tool" aria-label="生誕日数計算">
+      <section class="tool" aria-label="誕生日カウンター">
         <form class="controls" id="birthday-form">
-          <label class="field">
-            <span>生年月日</span>
-            <input id="birthdate" name="birthdate" type="date" required>
+          <label class="field birth-field">
+            <span>誕生日</span>
+            <input
+              id="birthdate"
+              name="birthdate"
+              type="text"
+              inputmode="numeric"
+              autocomplete="bday"
+              pattern="[0-9０-９]{8}"
+              maxlength="8"
+              placeholder="YYYYMMDD"
+              required
+            >
+          </label>
+
+          <label class="field day-field">
+            <span>N日目</span>
+            <input
+              id="custom-days"
+              name="custom-days"
+              type="text"
+              inputmode="numeric"
+              pattern="[0-9０-９]*"
+              placeholder="10000"
+            >
           </label>
 
           <button class="primary-button" type="submit">計算</button>
@@ -27,24 +49,33 @@
 
         <section class="summary" id="summary" hidden>
           <div class="today-panel">
-            <p class="today-message">今日は生誕<output id="today-days"></output>日目です！</p>
+            <p class="today-message">
+              <span id="today-prefix">今日は</span>
+              <output id="today-days"></output>
+              <span id="today-suffix">日目です</span>
+            </p>
+            <p class="today-date" id="today-date"></p>
           </div>
 
-          <div class="milestones" aria-label="記念日">
+          <div class="result-grid">
+            <article class="milestone custom-result" id="custom-result" hidden>
+              <span class="milestone-count"><span id="custom-label"></span>目</span>
+              <output id="custom-date"></output>
+            </article>
             <article class="milestone">
-              <span class="milestone-count">7777日になる日付</span>
+              <span class="milestone-count">7777日目</span>
               <output id="date-7777"></output>
             </article>
             <article class="milestone">
-              <span class="milestone-count">10000日になる日付</span>
+              <span class="milestone-count">10000日目</span>
               <output id="date-10000"></output>
             </article>
             <article class="milestone">
-              <span class="milestone-count">20000日になる日付</span>
+              <span class="milestone-count">20000日目</span>
               <output id="date-20000"></output>
             </article>
             <article class="milestone">
-              <span class="milestone-count">30000日になる日付</span>
+              <span class="milestone-count">30000日目</span>
               <output id="date-30000"></output>
             </article>
           </div>

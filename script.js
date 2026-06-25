@@ -7,14 +7,23 @@ const birthdateInput = document.querySelector("#birthdate");
 const customDaysInput = document.querySelector("#custom-days");
 const statusText = document.querySelector("#status");
 const summary = document.querySelector("#summary");
+const todayPrefix = document.querySelector("#today-prefix");
 const todayDays = document.querySelector("#today-days");
+const todaySuffix = document.querySelector("#today-suffix");
 const todayDate = document.querySelector("#today-date");
 const customResult = document.querySelector("#custom-result");
 const customLabel = document.querySelector("#custom-label");
 const customDate = document.querySelector("#custom-date");
 
+function normalizeDigits(value) {
+  return value.replace(/[０-９]/g, (char) =>
+    String.fromCharCode(char.charCodeAt(0) - 0xfee0),
+  );
+}
+
 function parseDateInput(value) {
-  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+  const digits = normalizeDigits(value.trim());
+  const match = /^(\d{4})(\d{2})(\d{2})$/.exec(digits);
   if (!match) return null;
 
   const year = Number(match[1]);
@@ -70,16 +79,10 @@ function formatNumber(value) {
 function parseCustomDays(value) {
   if (typeof value !== "string") return null;
 
-  const trimmed = value.trim();
+  const trimmed = normalizeDigits(value.trim());
   if (trimmed === "") return null;
   if (!/^\d+$/.test(trimmed)) return Number.NaN;
   return Number(trimmed);
-}
-
-function formatInputDate(parts) {
-  const month = String(parts.month).padStart(2, "0");
-  const day = String(parts.day).padStart(2, "0");
-  return `${parts.year}-${month}-${day}`;
 }
 
 function renderMilestones(birthParts) {
@@ -110,7 +113,7 @@ function calculate() {
   summary.hidden = true;
 
   if (!birthParts) {
-    statusText.textContent = "生年月日を入力してください。";
+    statusText.textContent = "誕生日は8桁の数字で入力してください。";
     return;
   }
 
@@ -125,18 +128,22 @@ function calculate() {
   const todayParts = getTodayParts();
   const elapsedDays = diffDays(birthParts, todayParts);
 
-  if (elapsedDays < 0) {
-    statusText.textContent = "未来の日付は生年月日として計算できません。";
-    return;
-  }
-
+  todayPrefix.textContent = "今日は";
   todayDays.value = formatNumber(elapsedDays);
-  if (todayDate) {
-    todayDate.textContent = `${formatDate(todayParts)}時点（誕生日 = 0日目）`;
-  }
+  todaySuffix.textContent = "日目です";
+
+  todayDate.textContent = `${formatDate(todayParts)} 現在 / 誕生日 = 0日目`;
   renderMilestones(birthParts);
   renderCustomDay(birthParts, customDays);
   summary.hidden = false;
+}
+
+function sanitizeNumericInput(input) {
+  const normalized = normalizeDigits(input.value);
+  const digitsOnly = normalized.replace(/\D/g, "");
+  if (input.value !== digitsOnly) {
+    input.value = digitsOnly;
+  }
 }
 
 form.addEventListener("submit", (event) => {
@@ -144,8 +151,12 @@ form.addEventListener("submit", (event) => {
   calculate();
 });
 
-birthdateInput.max = formatInputDate(getTodayParts());
-birthdateInput.addEventListener("change", calculate);
+birthdateInput.addEventListener("input", () => {
+  sanitizeNumericInput(birthdateInput);
+  if (birthdateInput.value.length === 8) calculate();
+});
+
 customDaysInput?.addEventListener("input", () => {
-  if (birthdateInput.value) calculate();
+  sanitizeNumericInput(customDaysInput);
+  if (birthdateInput.value.length === 8) calculate();
 });
