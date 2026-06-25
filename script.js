@@ -1,6 +1,6 @@
 const MS_PER_DAY = 24 * 60 * 60 * 1000;
 const MAX_CUSTOM_DAYS = 1000000;
-const milestoneDays = [10000, 20000, 30000];
+const milestoneDays = [7777, 10000, 20000, 30000];
 
 const form = document.querySelector("#birthday-form");
 const birthdateInput = document.querySelector("#birthdate");
@@ -68,6 +68,8 @@ function formatNumber(value) {
 }
 
 function parseCustomDays(value) {
+  if (typeof value !== "string") return null;
+
   const trimmed = value.trim();
   if (trimmed === "") return null;
   if (!/^\d+$/.test(trimmed)) return Number.NaN;
@@ -88,6 +90,8 @@ function renderMilestones(birthParts) {
 }
 
 function renderCustomDay(birthParts, customDays) {
+  if (!customResult || !customLabel || !customDate) return;
+
   if (customDays === null) {
     customResult.hidden = true;
     return;
@@ -100,7 +104,7 @@ function renderCustomDay(birthParts, customDays) {
 
 function calculate() {
   const birthParts = parseDateInput(birthdateInput.value);
-  const customDays = parseCustomDays(customDaysInput.value);
+  const customDays = parseCustomDays(customDaysInput?.value);
 
   statusText.textContent = "";
   summary.hidden = true;
@@ -127,7 +131,9 @@ function calculate() {
   }
 
   todayDays.value = formatNumber(elapsedDays);
-  todayDate.textContent = `${formatDate(todayParts)}時点（誕生日 = 0日目）`;
+  if (todayDate) {
+    todayDate.textContent = `${formatDate(todayParts)}時点（誕生日 = 0日目）`;
+  }
   renderMilestones(birthParts);
   renderCustomDay(birthParts, customDays);
   summary.hidden = false;
@@ -140,6 +146,6 @@ form.addEventListener("submit", (event) => {
 
 birthdateInput.max = formatInputDate(getTodayParts());
 birthdateInput.addEventListener("change", calculate);
-customDaysInput.addEventListener("input", () => {
+customDaysInput?.addEventListener("input", () => {
   if (birthdateInput.value) calculate();
 });
