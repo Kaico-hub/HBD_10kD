@@ -114,7 +114,7 @@ function calculate() {
     customDays !== null &&
     (!Number.isSafeInteger(customDays) || customDays > MAX_CUSTOM_DAYS)
   ) {
-    statusText.textContent = "Nは0以上1000000以下の整数で入力してください。";
+    statusText.textContent = "Nは0以上1,000,000以下の整数で入力してください。";
     return;
   }
 
