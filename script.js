@@ -70,7 +70,7 @@ function diffDays(start, end) {
 }
 
 function formatDate(parts) {
-  return `${parts.year}年${parts.month}月${parts.day}日`;
+  return `${parts.year}/${parts.month}/${parts.day}`;
 }
 
 function formatNumber(value) {
@@ -101,7 +101,7 @@ function renderCustomDay(birthParts, customDays) {
     return;
   }
 
-  customLabel.textContent = `${formatNumber(customDays)}日`;
+  customLabel.textContent = `${formatNumber(customDays)}ﾆﾁ`;
   customDate.value = formatDate(addDays(birthParts, customDays));
   customResult.hidden = false;
 }
@@ -116,7 +116,7 @@ function calculate() {
   summary.hidden = true;
 
   if (!birthParts) {
-    statusText.textContent = "誕生日は8桁の数字で入力してください。";
+    statusText.textContent = "ﾀﾝｼﾞｮｳﾋﾞﾊ 8ｹﾀﾉ ｽｳｼﾞﾃﾞ ﾆｭｳﾘｮｸｼﾃｸﾀﾞｻｲ｡";
     return;
   }
 
@@ -124,18 +124,18 @@ function calculate() {
     customDays !== null &&
     (!Number.isSafeInteger(customDays) || customDays > MAX_CUSTOM_DAYS)
   ) {
-    statusText.textContent = "Nは0以上1,000,000以下の整数で入力してください。";
+    statusText.textContent = "Nﾊ 0ｲｼﾞｮｳ 1,000,000ｲｶﾉ ｾｲｽｳﾃﾞ ﾆｭｳﾘｮｸｼﾃｸﾀﾞｻｲ｡";
     return;
   }
 
   const todayParts = getTodayParts();
   const elapsedDays = diffDays(birthParts, todayParts);
 
-  todayPrefix.textContent = "今日は";
+  todayPrefix.textContent = "ｷｮｳﾊ";
   todayDays.value = formatNumber(elapsedDays);
-  todaySuffix.textContent = "日目です";
+  todaySuffix.textContent = "ﾆﾁﾒﾃﾞｽ";
+  todayDate.textContent = "";
 
-  todayDate.textContent = `${formatDate(todayParts)} 現在 / 誕生日 = 0日目`;
   if (customDaysField) {
     customDaysField.hidden = false;
     form.classList.add("has-custom");
