@@ -4,6 +4,7 @@ const milestoneDays = [7777, 10000, 20000, 30000];
 
 const form = document.querySelector("#birthday-form");
 const birthdateInput = document.querySelector("#birthdate");
+const customDaysField = document.querySelector("#custom-days-field");
 const customDaysInput = document.querySelector("#custom-days");
 const statusText = document.querySelector("#status");
 const summary = document.querySelector("#summary");
@@ -107,7 +108,9 @@ function renderCustomDay(birthParts, customDays) {
 
 function calculate() {
   const birthParts = parseDateInput(birthdateInput.value);
-  const customDays = parseCustomDays(customDaysInput?.value);
+  const customDays = customDaysField?.hidden
+    ? null
+    : parseCustomDays(customDaysInput?.value);
 
   statusText.textContent = "";
   summary.hidden = true;
@@ -133,6 +136,10 @@ function calculate() {
   todaySuffix.textContent = "日目です";
 
   todayDate.textContent = `${formatDate(todayParts)} 現在 / 誕生日 = 0日目`;
+  if (customDaysField) {
+    customDaysField.hidden = false;
+    form.classList.add("has-custom");
+  }
   renderMilestones(birthParts);
   renderCustomDay(birthParts, customDays);
   summary.hidden = false;

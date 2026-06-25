@@ -57,9 +57,13 @@ h1 {
 
 .controls {
   display: grid;
-  grid-template-columns: minmax(150px, 1fr) minmax(96px, 140px) auto;
+  grid-template-columns: minmax(150px, 1fr) auto;
   gap: 10px;
   align-items: end;
+}
+
+.controls.has-custom {
+  grid-template-columns: minmax(150px, 1fr) minmax(96px, 140px) auto;
 }
 
 .field {
@@ -162,11 +166,14 @@ input:focus {
 }
 
 .custom-result {
-  border-color: rgba(47, 95, 143, 0.42);
+  border: 1px solid rgba(47, 95, 143, 0.45);
+  border-radius: 8px;
   background: #f6f9fc;
+  padding: 12px 13px;
 }
 
-.milestone output {
+.milestone output,
+.custom-result output {
   display: block;
   margin-top: 5px;
   font-size: 1rem;
@@ -193,8 +200,12 @@ input:focus {
   }
 
   .controls {
-    grid-template-columns: minmax(132px, 1fr) minmax(76px, 92px) auto;
+    grid-template-columns: minmax(132px, 1fr) auto;
     gap: 8px;
+  }
+
+  .controls.has-custom {
+    grid-template-columns: minmax(132px, 1fr) minmax(76px, 92px) auto;
   }
 
   .primary-button {
